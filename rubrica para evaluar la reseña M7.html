@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Herramienta de Evaluación de Reseñas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-slate-100 flex items-center justify-center min-h-screen p-4">
+
+    <main class="bg-white rounded-xl shadow-2xl p-6 md:p-10 max-w-5xl w-full space-y-8">
+        
+        <!-- Encabezado de la Actividad -->
+        <div class="text-center">
+            <h1 class="text-3xl md:text-4xl font-bold text-slate-800">Actividad de Evaluación</h1>
+            <p class="text-slate-600 mt-2 max-w-3xl mx-auto">Escribe una breve reseña (máximo 150 palabras) de la herramienta de IA que utilizaste.</p>
+        </div>
+
+        <!-- Sección para Escribir la Reseña -->
+        <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
+            <label for="review" class="block text-lg font-semibold text-slate-700 mb-2">Tu Reseña</label>
+            <p class="text-sm text-slate-500 mb-4">Comenta sobre: 1) Su facilidad de uso, 2) La calidad del borrador generado, y 3) La importancia de la supervisión docente.</p>
+            <textarea id="review" rows="6" class="w-full p-3 border border-slate-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow duration-300" placeholder="Comienza a escribir aquí..."></textarea>
+            <div id="word-count" class="text-right text-sm font-medium text-slate-500 mt-2">0 / 150 palabras</div>
+        </div>
+
+        <!-- Instrumento de Evaluación (Rúbrica) -->
+        <div>
+            <h2 class="text-2xl font-bold text-slate-800 mb-4 text-center md:text-left">Instrumento de Evaluación: Rúbrica</h2>
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white border border-slate-200 rounded-lg shadow-sm">
+                    <thead class="bg-slate-100">
+                        <tr>
+                            <th class="p-3 text-left text-sm font-semibold text-slate-600">Criterios de Evaluación</th>
+                            <th class="p-3 text-left text-sm font-semibold text-green-600">Sobresaliente (4)</th>
+                            <th class="p-3 text-left text-sm font-semibold text-blue-600">Bueno (3)</th>
+                            <th class="p-3 text-left text-sm font-semibold text-yellow-600">Suficiente (2)</th>
+                            <th class="p-3 text-left text-sm font-semibold text-red-600">Insuficiente (1)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-200">
+                        <tr>
+                            <td class="p-3 font-medium text-slate-700">1. Descripción de la experiencia</td>
+                            <td class="p-3 text-slate-600 text-sm">Describe de forma clara, detallada y secuencial su interacción con la herramienta.</td>
+                            <td class="p-3 text-slate-600 text-sm">Describe su interacción de forma clara, aunque con menos detalle.</td>
+                            <td class="p-3 text-slate-600 text-sm">La descripción es vaga o confusa.</td>
+                            <td class="p-3 text-slate-600 text-sm">No describe cómo utilizó la herramienta.</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-medium text-slate-700">2. Análisis crítico</td>
+                            <td class="p-3 text-slate-600 text-sm">Analiza de forma reflexiva la calidad y argumenta con solidez sobre la importancia de la supervisión docente.</td>
+                            <td class="p-3 text-slate-600 text-sm">Analiza la calidad y menciona la importancia de la supervisión, pero no conecta ambas ideas.</td>
+                            <td class="p-3 text-slate-600 text-sm">Menciona superficialmente la calidad o la supervisión, sin análisis.</td>
+                            <td class="p-3 text-slate-600 text-sm">No realiza ningún análisis.</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-medium text-slate-700">3. Claridad y redacción</td>
+                            <td class="p-3 text-slate-600 text-sm">El texto es conciso, claro, sin errores y cumple con la extensión solicitada.</td>
+                            <td class="p-3 text-slate-600 text-sm">El texto es mayormente claro, pero puede tener 1-2 errores menores.</td>
+                            <td class="p-3 text-slate-600 text-sm">El texto es difícil de entender debido a errores de redacción.</td>
+                            <td class="p-3 text-slate-600 text-sm">El texto es incomprensible.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Botón y Resultados (Simulado) -->
+        <div class="text-center">
+             <button id="submit-button" class="bg-blue-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-blue-700 transition-transform transform hover:scale-105 shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-300">
+                Evaluar Mi Reseña (Simulación)
+            </button>
+        </div>
+        
+        <div id="results" class="hidden p-6 bg-blue-50 border-l-4 border-blue-500 rounded-r-lg">
+            <h3 class="text-xl font-bold text-blue-800">Resultado de la Simulación</h3>
+            <p id="results-text" class="text-blue-700 mt-2"></p>
+        </div>
+
+    </main>
+
+    <script>
+        const reviewTextarea = document.getElementById('review');
+        const wordCountDisplay = document.getElementById('word-count');
+        const submitButton = document.getElementById('submit-button');
+        const resultsDiv = document.getElementById('results');
+        const resultsText = document.getElementById('results-text');
+        const maxWords = 150;
+
+        // --- Lógica para el contador de palabras ---
+        reviewTextarea.addEventListener('input', () => {
+            const text = reviewTextarea.value.trim();
+            // Contar palabras dividiendo por espacios en blanco
+            const words = text === '' ? 0 : text.split(/\s+/).length;
+            
+            wordCountDisplay.textContent = `${words} / ${maxWords} palabras`;
+
+            if (words > maxWords) {
+                wordCountDisplay.classList.remove('text-slate-500');
+                wordCountDisplay.classList.add('text-red-600', 'font-bold');
+            } else {
+                wordCountDisplay.classList.add('text-slate-500');
+                wordCountDisplay.classList.remove('text-red-600', 'font-bold');
+            }
+        });
+
+        // --- Lógica para la simulación de evaluación ---
+        submitButton.addEventListener('click', () => {
+            const text = reviewTextarea.value.trim();
+            const words = text === '' ? 0 : text.split(/\s+/).length;
+
+            if (words === 0) {
+                alert('Por favor, escribe tu reseña antes de evaluarla.');
+                return;
+            }
+
+            // Simulación simple: genera puntajes aleatorios para la demostración
+            const score1 = Math.floor(Math.random() * 2) + 3; // Puntaje entre 3-4
+            const score2 = Math.floor(Math.random() * 2) + 3; // Puntaje entre 3-4
+            const score3 = Math.floor(Math.random() * 3) + 2; // Puntaje entre 2-4
+            const totalScore = score1 + score2 + score3;
+            
+            let feedback = `
+                <ul class="list-disc list-inside space-y-1 mt-2">
+                    <li>Descripción de la Experiencia: <strong>${score1} puntos</strong></li>
+                    <li>Análisis Crítico: <strong>${score2} puntos</strong></li>
+                    <li>Claridad y Redacción: <strong>${score3} puntos</strong></li>
+                </ul>
+                <p class="font-bold mt-4">Puntaje Total: ${totalScore} de 12</p>
+            `;
+
+            if (totalScore >= 11) {
+                feedback += "<p class='mt-2 font-semibold text-green-700'>¡Excelente trabajo! Tu reseña cumple con todos los criterios de manera sobresaliente.</p>";
+            } else if (totalScore >= 8) {
+                feedback += "<p class='mt-2 font-semibold text-blue-700'>¡Buen trabajo! La reseña es clara y cumple con los objetivos principales.</p>";
+            } else {
+                feedback += "<p class='mt-2 font-semibold text-yellow-700'>Tu reseña es un buen comienzo, pero revisa los criterios para ver cómo puedes mejorarla.</p>";
+            }
+
+            resultsText.innerHTML = feedback;
+            resultsDiv.classList.remove('hidden');
+            resultsDiv.classList.add('fade-in');
+        });
+    </script>
+</body>
+</html>
